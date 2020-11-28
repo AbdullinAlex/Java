@@ -2,7 +2,7 @@ package ua.khpi.oop.abdullin03;
 
 /**
  * Класс, который находит самое длинное предложение из 3 типов(начинаеться на 
- * гласную, согласную и начинаеться ни на гласную, ни на согласную) 
+ * гласную, согласную и начинаеться ни на гласную, ни на согласную) взятых и текста.
  * @author Abdullin Oleksii
  *
  */
@@ -31,7 +31,7 @@ public class TypeOfString {
 			return count;
 		}
 		/**
-		 * Поиск самого пергового знака указывающий на конец предложения, с указаного начала
+		 * Поиск самого пергового знака указывающий на конец предложения, с указаного начала.
 		 * @param sb текст
 		 * @param start начало, откуда надо искать
 		 * @return Позицию самого первого признака конца предложения, начиная с указаной позиции
@@ -55,7 +55,7 @@ public class TypeOfString {
 			return min;
 		}
 		/**
-		 * Метод поиска количества предложений разного типа
+		 * Метод поиска количества предложений разного типа.
 		 * @param str текст
 		 * @param sentences количество предложений в тексту
 		 */
@@ -84,11 +84,10 @@ public class TypeOfString {
 			makemas(sb, vowel, conconent, other, sentences);
 		}
 		/**
-		 * 
-		 * @param sb
+		 * Метод определения типа предложения
+		 * @param sb предложение взятое изтекста
 		 * @return
 		 */
-		// метод определения типа предложения
 		public static int typeofstring(StringBuilder sb)
 		{
 			int i = 0;
@@ -127,14 +126,13 @@ public class TypeOfString {
 			return strb;
 		}
 		/**
-		 * 
+		 * Метод создания трех массивов, каждый из которых содержит предложения подобного себе типа.
 		 * @param sb текст
 		 * @param vowel количество предложений начинающиеся на гласную
 		 * @param conconent количество предложений начинающиеся на согласную
 		 * @param other количество предложений начинающиеся на не гласную и не согласную
 		 * @param sentences количество предложений
 		 */
-	// метод создания трех массивов, каждый из которых содержит предложения подобного себе типа
 	public static void makemas(StringBuilder sb, int vowel, int conconent, int other, int sentences) 
 	{
 		StringBuilder strb;
@@ -200,7 +198,6 @@ public class TypeOfString {
 	 * @param mas массив с предложениями одного типа
 	 * @param count количество предложений в массиве
 	 */
-	//метод вывода массивов
 	public static void output(StringBuilder mas[], int count) 
 	{
 		for(int i = 0; count > i; i++)
