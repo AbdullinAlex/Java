@@ -28,6 +28,7 @@ public class Main {
 		int resOne4 = Main.countOne(var4);
 		int resOne5 = Main.countOne(var5);
 		int resOne6 = Main.countOne(var6);
+		System.out.println();
 	}
 	
 	public static int countPair (long a) 
