@@ -1,8 +1,9 @@
-package ua.khpi.oop.abdullin05;
+package ua.khpi.oop.abdullin06;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
-public class Container {
+public class Container implements Serializable{
 	private String[] arraystring;
 	private int size = 0; 
 	
@@ -96,6 +97,65 @@ public class Container {
 			return true;
 		else
 			return false;
+	}
+	
+	public void printContainer() {
+		if(size() > 0) 
+		{
+			for(String str : arraystring)
+				System.out.println(str);
+		}
+		else 
+		{
+			System.out.println("Conatainer is empty.");
+		}
+		System.out.println();
+	}
+	
+	public int find(String str) {
+		int position = 0;
+		for(String string : arraystring)
+		{
+			if(string.equals(str))
+				return position;
+			position++;
+		}
+		return -1;
+	}
+	
+	public void sortAlphabet(int typeofsorting) {
+		if(typeofsorting == 1) 
+		{
+			for(int i = 0; i < size - 1; i++)
+				for(int j = 0; j < size - 1; j++)
+					if(arraystring[j].compareTo(arraystring[j+1]) > 0)
+					{
+						String temp = arraystring[j];
+						arraystring[j] = arraystring[j+1];
+						arraystring[j+1] = temp;
+					}
+		}
+		else if (typeofsorting == 2)
+		{
+			for(int i = 0; i < size - 1; i++)
+				for(int j = 0; j < size - 1; j++)
+					if(arraystring[j].compareTo(arraystring[j+1]) < 0)
+					{
+						String temp = arraystring[j];
+						arraystring[j] = arraystring[j+1];
+						arraystring[j+1] = temp;
+					}
+		}
+	}
+	
+	public int compareElements (int position1, int position2) 
+	{
+		if(position1 > size || position2 > size)
+			return -1;
+		if(arraystring[position1 - 1].equals(arraystring[position2 - 1]))
+			return 1;
+		else
+			return 0;
 	}
 	
 	public MyIterator<String> iterator() {
