@@ -6,6 +6,10 @@ public class Container {
 	private String[] arraystring;
 	private int size = 0; 
 	
+	/**
+	 * Конструктор 
+	 * @param masstr - массив строк (предложений)
+	 */
 	public Container (String... masstr) {
 		if(masstr.length != 0) 
 		{
@@ -16,6 +20,9 @@ public class Container {
 		}
 	}
 	
+	/**
+	 * Метод преобразования всех предложений в один текст
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < size; i++)
@@ -23,6 +30,10 @@ public class Container {
 		return sb.toString();
 	}
 	
+	/**
+	 * Метод добавления строки в конец контейнера
+	 * @param str - строка, которая будет добавлена
+	 */
 	public void add(String str) {
 		String[] newmas = new String[size+1];
 		for(int i = 0; i < size; i++)
@@ -32,12 +43,20 @@ public class Container {
 		arraystring = newmas;
 	}
 	
+	/**
+	 * Метод отчистки всего контейнера
+	 */
 	void clear() {
 		for(int i = 0; i < size; i++)
 			arraystring[i] = null;
 		size = 0;
 	}
 	
+	/**
+	 * Метод удаления строки (первая схожая)
+	 * @param str - строка, которую нужно удалить
+	 * @return  true - трока удалена | false - такой строки нет
+	 */
 	boolean remove(String str) {
 		boolean bool = false;
 		int position = -1;
@@ -64,24 +83,39 @@ public class Container {
 		return bool;
 	}
 	
+	/**
+	 * Метод преобразования массива строк, в массив объектов
+	 * @return  массив, содержащий в себе все елементы контейнера
+	 */
 	public Object[] toArray() {
 		Object[] obj = new Object[size];
 		for(int i = 0; i < size; i++)
 			obj[i] = arraystring[i];
 		return obj;
 	}
-	
+	/**
+	 * Метод получения размера контейнера
+	 * @return  количетво елементов контейнера
+	 */
 	int size() {
 		return size;
 	}
-	
+	/**
+	 * Метод получения информации про указаный елемент
+	 * @param str строка, которую нужно найти в контейнере
+	 * @return true - указаная строка есть в контейнере | false - указаной строки нет
+	 */
 	boolean contains(String str) {
 		for(int i = 0; i < size; i++)
 			if(arraystring[i].equals(str))
 				return true;
 		return false;
 	}
-	
+	/**
+	 * Метод получения информации про наличее всех указаных елементов
+	 * @param container кнтейнер, который содержет в себе все указаные строки для их поиска в контейнере
+	 * @return true - все указаные строки есть в контейнере | false - не все строки есть в контейнере
+	 */
 	boolean containsAll(Container container) {
 		int count = 0;
 		if(size < container.size() || container.size() == 0)

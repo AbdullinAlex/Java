@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 import ua.khpi.oop.abdullin03.TypeOfString;
+import ua.khpi.oop.zanochkyn03.DeleteWords;
 
 
 public class Main {
@@ -33,14 +34,14 @@ public class Main {
 			System.out.println("4. Delete element from container");
 			System.out.println("5. Clear container");
 			System.out.println("6. Find element in container");
-			System.out.println("8. Sort container by alphabet");
-			System.out.println("9. Compare elements in container");
-			System.out.println("10. Type of string.");
-			System.out.println("11. Zanochkin class");
-			System.out.println("12. Serialize container");
-			System.out.println("13. Deserialize");
-			System.out.println("14. Exit");
-			System.out.println("Enter your option:");
+			System.out.println("7. Sort container by alphabet");
+			System.out.println("8. Compare elements in container");
+			System.out.println("9. Type of string.");
+			System.out.println("10. Zanochkin class");
+			System.out.println("11. Serialize container");
+			System.out.println("12. Deserialize");
+			System.out.println("13. Exit");
+			System.out.println("Enter option:");
 			int menu = inInt.nextInt();
 			System.out.println();
 			switch (menu) 
@@ -89,7 +90,7 @@ public class Main {
 				else 
 					System.out.println("There is no such element\n");
 				break;
-			case 8:
+			case 7:
 				System.out.println("1. Ascending");
 				System.out.println("2. Descending");
 				int sortAlphabet = inInt.nextInt();
@@ -101,7 +102,7 @@ public class Main {
 				else 
 					System.out.println("Try one more time");
 				break;
-			case 9:
+			case 8:
 				container.printContainer();
 				System.out.println("Enter positions of elements (from 1 to " + container.size() + "):");
 				int position1 = inInt.nextInt();
@@ -114,22 +115,23 @@ public class Main {
 				else
 					System.out.println("Wrong position\n");
 				break;
-			case 10:
+			case 9:
 				int sentenses = TypeOfString.countsentences(container.toString());
 				TypeOfString.findtypes(container.toString(),sentenses);
 				break;
-			case 11:
-				//int sentenses = TypeOfString.countsentences(container.toString());
-				//TypeOfString.findtypes(container.toString(),sentenses);
+			case 10:
+				System.out.println("Enter count of letters and words with that count will be deleted (which starded on conconent):");
+		        int count = inInt.nextInt();
+		        DeleteWords.findAndDelete(container.toString(), count);
 				break;
-			case 12:
+			case 11:
 				FileOutputStream fos = new FileOutputStream("Serialization.ser");
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
 				oos.writeObject(container);
 				oos.close();
 				System.out.println("Serialization is complete\n");
 				break;
-			case 13:
+			case 12:
 				FileInputStream fis = new FileInputStream("Serialization.ser");
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				Container temp = (Container) ois.readObject();
@@ -137,7 +139,7 @@ public class Main {
 				System.out.println("Deserialization is complete\n");
 				temp.printContainer();
 				break;
-			case 14:
+			case 13:
 				endprog = false;
 				container.clear();
 				inInt.close();
