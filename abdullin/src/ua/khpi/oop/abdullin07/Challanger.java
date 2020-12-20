@@ -6,8 +6,9 @@ public class Challanger {
 	private int dismissalDay;
 	private int dismissalMonth;
 	private int dismissalYear;
-	private WorkExperience workExperience;
 	private DemandsToWork demandsToWork;
+	private WorkExperience workExperience;
+	
 	/**
 	 * Конструктор
 	 * @param registrationNum ID претндента
@@ -26,6 +27,10 @@ public class Challanger {
 		this.dismissalYear = dismissalYear;
 		this.workExperience = workExperience;
 		this.demandsToWork = demandsToWork;
+	}
+	public Challanger() 
+	{
+		super();
 	}
 	/**
 	 * Геттер ID претендента
@@ -101,22 +106,19 @@ public class Challanger {
 	 * Геттер опыта работы претендента
 	 * @return 
 	 */
-	public WorkExperience getWorkExperience() {
-		return workExperience;
-	}
-	/**
-	 * Сеттер опыта работы претендента
-	 * @param workExperience
-	 */
-	public void setWorkExoerience(WorkExperience workExperience) {
-		this.workExperience = workExperience;
-	}
+
 	/**
 	 * Геттер требований к будующей работе
 	 * @return
 	 */
 	public DemandsToWork getDemandsToWork() {
 		return demandsToWork;
+	}
+	public WorkExperience getWorkExperience() {
+		return workExperience;
+	}
+	public void setWorkExperience(WorkExperience workExperience) {
+		this.workExperience = workExperience;
 	}
 	/**
 	 * Сеттер требований к будующей работе 
@@ -125,16 +127,4 @@ public class Challanger {
 	public void setDemandsToWork(DemandsToWork demandsToWork) {
 		this.demandsToWork = demandsToWork;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -1,6 +1,6 @@
 package ua.khpi.oop.abdullin07;
 
-public class DemandsToWork {
+public class DemandsToWork  {
 	private String specialization;
 	private int minSalary;
 	private String conditions;
@@ -9,6 +9,10 @@ public class DemandsToWork {
 		this.specialization =specialization;
 		this.minSalary = minSalary;
 		this.conditions = conditions;
+	}
+	public DemandsToWork() 
+	{
+		super();
 	}
 	
 	public String getSpecialization() {
