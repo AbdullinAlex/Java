@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.8" class="java.beans.XMLDecoder">
+ <object class="ua.khpi.oop.abdullin09.MyContainer" id="MyContainer0">
+  <void class="ua.khpi.oop.abdullin09.MyContainer" method="getField">
+   <string>head</string>
+   <void method="set">
+    <object idref="MyContainer0"/>
+    <object class="ua.khpi.oop.abdullin09.Node" id="Node0">
+     <void class="ua.khpi.oop.abdullin09.Node" method="getField">
+      <string>element</string>
+      <void method="set">
+       <object idref="Node0"/>
+       <object class="ua.khpi.oop.abdullin07.Challanger">
+        <void property="demandsToWork">
+         <object class="ua.khpi.oop.abdullin07.DemandsToWork">
+          <void property="conditions">
+           <string>Coffie machine. Free coffie.</string>
+          </void>
+          <void property="minSalary">
+           <int>21900</int>
+          </void>
+          <void property="specialization">
+           <string>HR-manager</string>
+          </void>
+         </object>
+        </void>
+        <void property="dismissalDay">
+         <int>12</int>
+        </void>
+        <void property="dismissalMonth">
+         <int>5</int>
+        </void>
+        <void property="dismissalYear">
+         <int>2020</int>
+        </void>
+        <void property="education">
+         <string>Higher education</string>
+        </void>
+        <void property="workExperience">
+         <object class="ua.khpi.oop.abdullin07.WorkExperience">
+          <void property="experience">
+           <int>2</int>
+          </void>
+          <void property="specialization">
+           <string>HR-manager</string>
+          </void>
+         </object>
+        </void>
+       </object>
+      </void>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void property="size">
+   <int>1</int>
+  </void>
+ </object>
+</java>

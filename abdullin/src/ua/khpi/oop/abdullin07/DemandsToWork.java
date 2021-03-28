@@ -1,6 +1,10 @@
 package ua.khpi.oop.abdullin07;
 
-public class DemandsToWork  {
+import java.io.Serializable;
+
+public class DemandsToWork implements Serializable  {
+	private static final long serialVersionUID = 8676463924474477917L;
+	
 	private String specialization;
 	private int minSalary;
 	private String conditions;

@@ -1,10 +1,11 @@
-package ua.khpi.oop.abdullin07;
+package ua.khpi.oop.abdullin09;
 
 import java.io.Serializable;
 
-public class Challanger implements Serializable {
-	private static final long serialVersionUID = -8290634946232397672L;
-	
+import ua.khpi.oop.abdullin07.DemandsToWork;
+import ua.khpi.oop.abdullin07.WorkExperience;
+
+public class Challanger implements Serializable{
 	private int registrationNum;
 	private String education;
 	private int dismissalDay;
@@ -12,6 +13,9 @@ public class Challanger implements Serializable {
 	private int dismissalYear;
 	private DemandsToWork demandsToWork;
 	private WorkExperience workExperience;
+	
+	
+	private static final long serialVersionUID = -136410610945474890L;
 	
 	/**
 	 * Конструктор
@@ -133,33 +137,32 @@ public class Challanger implements Serializable {
 	}
 	
 	public void print() {
-		System.out.println("ID: " + getRegistrationNum());
-		System.out.println("Образование: " + getEducation());
-		System.out.println("Дата увольнения: " + getDismissalDay()+"/" + getDismissalMonth()+"/"+getDismissalYear());
-		System.out.println("---Опыт работы---");
-		System.out.println("Место предыдущей работы: " + getWorkExperience().getSpecialization());
-		if(getWorkExperience().getExperience() <= 4)
-			System.out.println("Стаж: " + getWorkExperience().getExperience() + " год(а)");
-		else
-			System.out.println("Стаж: " + getWorkExperience().getExperience() + " лет");
-		System.out.println("---Желания по будующей работе---" );
-		if(getDemandsToWork().getMinSalary() == 0 && getDemandsToWork().getSpecialization() == null && getDemandsToWork().getConditions() == null)
-			System.out.println("Предендет не имеет никаких желаний по будующей работе");
-		else {
-			if(getDemandsToWork().getMinSalary() != 0)
-				System.out.println("Желаемая минимальная зарплата: " + getDemandsToWork().getMinSalary());
+			System.out.println("ID: " + getRegistrationNum());
+			System.out.println("Образование: " + getEducation());
+			System.out.println("Дата увольнения: " + getDismissalDay()+"/" + getDismissalMonth()+"/"+getDismissalYear());
+			System.out.println("---Опыт работы---");
+			System.out.println("Место предыдущей работы: " + getWorkExperience().getSpecialization());
+			if(getWorkExperience().getExperience() <= 4)
+				System.out.println("Стаж: " + getWorkExperience().getExperience() + " год(а)");
 			else
-				System.out.println("Желаемая минимальная зарплата: Претендент не имеет пожеланий к этому пунку " );
-			if(getDemandsToWork().getSpecialization() != null)
-				System.out.println("Желаемая будующая работа: " + getDemandsToWork().getSpecialization());
-			else
-				System.out.println("Желаемая будующая работа: Претендент не имеет пожеланий к этому пунку");
-			if(getDemandsToWork().getConditions() != null)
-				System.out.println("Желаемые условия будующей работы: " + getDemandsToWork().getConditions());
-			else
-				System.out.println("Желаемые условия будующей работы: Претендент не имеет пожеланий к этому пунку");
-		}
-		System.out.println("------------------------------------------");
-		
+				System.out.println("Стаж: " + getWorkExperience().getExperience() + " лет");
+			System.out.println("---Желания по будующей работе---" );
+			if(getDemandsToWork().getMinSalary() == 0 && getDemandsToWork().getSpecialization() == null && getDemandsToWork().getConditions() == null)
+				System.out.println("Предендет не имеет никаких желаний по будующей работе");
+			else {
+				if(getDemandsToWork().getMinSalary() != 0)
+					System.out.println("Желаемая минимальная зарплата: " + getDemandsToWork().getMinSalary());
+				else
+					System.out.println("Желаемая минимальная зарплата: Претендент не имеет пожеланий к этому пунку " );
+				if(getDemandsToWork().getSpecialization() != null)
+					System.out.println("Желаемая будующая работа: " + getDemandsToWork().getSpecialization());
+				else
+					System.out.println("Желаемая будующая работа: Претендент не имеет пожеланий к этому пунку");
+				if(getDemandsToWork().getConditions() != null)
+					System.out.println("Желаемые условия будующей работы: " + getDemandsToWork().getConditions());
+				else
+					System.out.println("Желаемые условия будующей работы: Претендент не имеет пожеланий к этому пунку");
+			}
+			System.out.println("------------------------------------------");
 	}
 }

@@ -1,6 +1,10 @@
 package ua.khpi.oop.abdullin07;
 
-public class WorkExperience{
+import java.io.Serializable;
+
+public class WorkExperience implements Serializable {
+		private static final long serialVersionUID = -4440232772223195381L;
+	
 	public String getSpecialization() {
 		return specialization;
 	}
@@ -24,7 +28,4 @@ public class WorkExperience{
 	}
 	private String specialization;
 	private int experience;
-	
-		
-
 }
