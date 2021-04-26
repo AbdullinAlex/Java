@@ -1,30 +1,122 @@
-package ua.khpi.oop.abdullin09;
+package ua.khpi.oop.abdullin11;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ua.khpi.oop.abdullin07.Challanger;
 import ua.khpi.oop.abdullin07.DemandsToWork;
 import ua.khpi.oop.abdullin07.WorkExperience;
+import ua.khpi.oop.abdullin10.MyContainer;
 
 public class Main {
 
 	public static void main(String[] args) {
 		MyContainer<Challanger> recruitingAgency = new MyContainer<Challanger>();
 		
+		for (String str : args) {
+			if(str.equals("-a") || str.equals("-auto")) {
+				recruitingAgency = auto(recruitingAgency);
+				return;
+			}
+		}
+		recruitingAgency = menu(recruitingAgency);
+	}
+
+	private static MyContainer<Challanger> auto(MyContainer<Challanger> recruitingAgency) {
+		System.out.println("Adding elements...");
+		
+		File file = new File("recruitingAgency11.txt");
+
+		try {		
+			String education;
+			int day;
+			int month;
+			int year;
+			String specializationPrevious;
+			int experience;
+			String specializationNext;
+			int minSalary;
+			String conditions;
+			Scanner reader = new Scanner(file);
+			while(reader.hasNextLine()) {
+				String data = reader.nextLine();
+				Pattern pattern = Pattern.compile("((\\w+(|\\s))*,\\s([1-9]|[12]\\d|3[01])\\.([1-9]|1[012])\\.((19|20)\\d{2}),\\s" +
+												  "(\\w+.)+,\\s([0-9]|[1-6][0-9]),\\s(\\w+.)+,\\s([1-9]\\d{3,}),\\s(\\w+(\\.|\\s)(\\s|))+)");
+				Matcher matcher = pattern.matcher(data);
+				if(matcher.matches()) {
+					String[] information = data.split(",\\s");
+					education = information[0];
+					specializationPrevious = information[2];
+					experience = Integer.parseInt(information[3]);
+					specializationNext = information[4];
+					minSalary = Integer.parseInt(information[5]);
+					conditions = information[6];
+					String[] date = information[1].split("\\.");
+					day = Integer.parseInt(date[0]);
+					month = Integer.parseInt(date[1]);
+					year = Integer.parseInt(date[2]);
+					
+					int id = recruitingAgency.getSize();
+					
+					WorkExperience workExperienceAdd = new WorkExperience(specializationPrevious, experience);
+					DemandsToWork demandsToWorkAdd = new DemandsToWork(specializationNext,minSalary,conditions);
+					Challanger challangerAdd = new Challanger(id++,education,day,month,year,workExperienceAdd,demandsToWorkAdd);
+					recruitingAgency.add(challangerAdd);
+				}
+			}
+			reader.close();
+			System.out.println("Adding was end.\n");
+		} catch (FileNotFoundException e){
+			e.printStackTrace();
+		}
+		
+		System.out.println("List in Recruiting Agency:\n");
+		if(recruitingAgency.getSize() > 0) {
+			for(var element : recruitingAgency) {
+				element.print();
+			}
+		}
+		else {
+			System.out.println("The recruiting agency is empty!\n");
+		}
+		
+		int orderSort = 1;
+		
+		recruitingAgency.sort(new workExperienceComparator(), orderSort);
+		System.out.println("Data sorted by work experience");
+		
+		System.out.println("List in Recruiting Agency:\n");
+		if(recruitingAgency.getSize() > 0) {
+			for(var element : recruitingAgency) {
+				element.print();
+			}
+		}
+		
+		return recruitingAgency;
+	}
+	
+	private static MyContainer<Challanger> menu(MyContainer<Challanger> recruitingAgency) {
 		boolean endprog = false;
 		Scanner inInt = new Scanner(System.in);
 		Scanner inStr = new Scanner(System.in);
 		int menu;
+		int menuSort;
+		int orderSort;
 		int menuSerialization;
 		int menuDeserialization;
+		
+		
 		
 		while(!endprog)
 		{
@@ -33,8 +125,9 @@ public class Main {
 			System.out.println("3. Delete chellanger");
 			System.out.println("4. Clear list");
 			System.out.println("5. Is empty recruiting agency?");
-			System.out.println("6. Serialize data");
-			System.out.println("7. Deserialize data");
+			System.out.println("6. Sort data");
+			System.out.println("7. Serialize data");
+			System.out.println("8. Deserialize data");
 			System.out.println("0. Exit");
 			System.out.print("Enter option: ");
 			try 
@@ -71,9 +164,19 @@ public class Main {
 				int minSalary;
 				String conditions;
 				
+				Pattern patternEducation = Pattern.compile("(\\w+.)+");
+				Pattern patternDay = Pattern.compile("([1-9]|[12]\\d|3[01])");
+				Pattern patternMonth = Pattern.compile("([1-9]|1[012])");		
+				Pattern patternYear = Pattern.compile("(19|20)\\d{2}");
+				Pattern patternSpeÒialization = Pattern.compile("(\\w+.)+");
+				Pattern patternExperience = Pattern.compile("[0-9]|[1-6][0-9]");
+				Pattern patternMinSalary = Pattern.compile("(^[1-9]\\d{3,})");
+				Pattern patternConditions = Pattern.compile("(\\w+(\\.|\\s)(\\s|))+");
+				
 				System.out.println("Enter education of challanger: ");
 				try {
 					education = inStr.nextLine();
+					education = stringRegexCheck(education, patternEducation);
 				}catch(java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
@@ -82,6 +185,7 @@ public class Main {
 				System.out.println("Enter day of dismissal: ");
 				try {
 					day = inInt.nextInt();
+					day = intRegexCheck(day, patternDay);
 				} catch(java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
@@ -90,6 +194,7 @@ public class Main {
 				System.out.println("Enter month of dismissal: ");
 				try {
 					month = inInt.nextInt();
+					month = intRegexCheck(month, patternMonth);
 				} catch(java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
@@ -98,6 +203,7 @@ public class Main {
 				System.out.println("Enter year of dismissal: ");
 				try {
 					year = inInt.nextInt();
+					year = intRegexCheck(year, patternYear);
 				} catch(java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
@@ -106,6 +212,7 @@ public class Main {
 				System.out.println("Enter pervious job: ");
 				try {
 					specializationPrevious = inStr.nextLine();
+					specializationPrevious = stringRegexCheck(specializationPrevious, patternSpeÒialization);
 				} catch(java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
@@ -114,6 +221,7 @@ public class Main {
 				System.out.println("Enter experience of working: ");
 				try {
 					experience = inInt.nextInt();
+					experience = intRegexCheck(experience, patternExperience); 
 				} catch(java.util.InputMismatchException e){
 					System.out.println("Error! Incorect input!");
 					break;
@@ -122,6 +230,7 @@ public class Main {
 				System.out.println("Enter next job: ");
 				try {
 					specializationNext = inStr.nextLine();
+					specializationNext = stringRegexCheck(specializationNext, patternSpeÒialization);
 				} catch(java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
@@ -130,6 +239,7 @@ public class Main {
 				System.out.println("Enter min salary: ");
 				try {
 					minSalary = inInt.nextInt();
+					minSalary = intRegexCheck(minSalary, patternMinSalary);
 				}catch (java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
@@ -138,6 +248,7 @@ public class Main {
 				System.out.println("Enter whishes to the next job: ");
 				try {
 					conditions = inStr.nextLine();
+					conditions = stringRegexCheck(conditions, patternConditions);
 				} catch(java.util.InputMismatchException e){
 					System.out.println("Error! Incorect input!");
 					break;
@@ -180,6 +291,56 @@ public class Main {
 					System.out.println("Recruiting agency is not empty.");
 				break;
 			case 6:
+				System.out.println("1. Sort by Registration Number");
+				System.out.println("2. Sort by work experience");
+				System.out.println("3. Sort by demand to min salary");
+				System.out.println("4. Return to menu");
+				System.out.println("Enter option: ");
+				try 
+				{
+					menuSort =  inInt.nextInt();
+				}
+				catch(java.util.InputMismatchException e) 
+				{
+					System.out.println("Error! Œ¯Ë·Í‡ ‚‚Ó‰‡.");
+					break;
+				}
+				System.out.println();
+				System.out.println("How to sort data?");
+				System.out.println("1. Asc");
+				System.out.println("2. Desc");
+				System.out.println("Enter option: ");
+				try 
+				{
+					orderSort =  inInt.nextInt();
+				}
+				catch(java.util.InputMismatchException e) 
+				{
+					System.out.println("Error! Œ¯Ë·Í‡ ‚‚Ó‰‡.");
+					break;
+				}
+				switch(menuSort) {
+				case 1:
+					recruitingAgency.sort(new idComparator(), orderSort);
+					System.out.println("Data sorted by Registration Number\n");
+					break;
+				case 2:
+					recruitingAgency.sort(new workExperienceComparator(), orderSort);
+					System.out.println("Data sorted by work experience\n");
+					break;
+				case 3:
+					recruitingAgency.sort(new minSalazyComparator(), orderSort);
+					System.out.println("Data sorted by demand to min salary");
+					break;
+				case 4:
+		
+					break;
+				default:
+					System.out.println("Error! Wrong num in Sort menu.");
+					break;
+				}
+				break;
+			case 7:
 				String filenameSerialization;
 				String filenameXML;
 				
@@ -229,7 +390,7 @@ public class Main {
 					break;
 				}
 				break;
-			case 7:
+			case 8:
 				String filenameDeserialization;
 				
 				System.out.println("1. Deserialization");
@@ -290,5 +451,47 @@ public class Main {
 				break;
 			}
 		}
+		return recruitingAgency;
+	}
+	public static int intRegexCheck(int value, Pattern pattern)
+	{
+		Matcher matcher;
+		Scanner in = new Scanner(System.in);
+		boolean ready = false;
+		do
+		{
+			matcher = pattern.matcher(Integer.toString(value));
+			if(!matcher.matches())
+			{
+				System.out.println("You've entered the wrong data. Try again:");
+				value = in.nextInt();
+			}
+			else
+				ready = true;
+		}
+		while(!ready);
+		return value;
+	}
+	
+	public static String stringRegexCheck(String value, Pattern pattern)
+	{
+		Matcher matcher;
+		Scanner in = new Scanner(System.in);
+		boolean ready = false;
+		do
+		{
+			matcher = pattern.matcher(value);
+			if(!matcher.matches())
+			{
+				System.out.println("You've entered the wrong data. Try again:");
+				value = in.nextLine();
+			}
+			else
+				ready = true;
+		}
+		while(!ready);
+		return value;
 	}
 }
+
+	

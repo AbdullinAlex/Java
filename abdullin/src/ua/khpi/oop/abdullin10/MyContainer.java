@@ -1,12 +1,15 @@
-package ua.khpi.oop.abdullin09;
+package ua.khpi.oop.abdullin10;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import ua.khpi.oop.abdullin07.Challanger;
+
 
 public class MyContainer<T> implements Iterable<T>, Serializable {
-		private static final long serialVersionUID = 707932790294563395L;
+		private static final long serialVersionUID = 1487028470983100792L;
 		
 		public Node<T> head;
 		private int size;
@@ -135,4 +138,79 @@ public class MyContainer<T> implements Iterable<T>, Serializable {
 				
 			};
 		}
+		
+		public void sort (Comparator<T> comp, int order) {
+			Object[] array = this.toArray();
+			Object temp;
+			boolean check;
+			
+			if (order == 1) {
+				do {
+					check = false;
+					for(int i = 0; size - 1 > i; i++) {
+						if(comp.compare((T)array[i],(T)array[i+1]) == 1) {
+							temp = array[i];
+							array[i] = array[i + 1];
+							array[i + 1] = temp;
+							check = true;
+						}
+					}
+				} while (check == true);
+			}
+			else {
+				do {
+					check = false;
+					for(int i = 0; size - 1 > i; i++) {
+						if(comp.compare((T)array[i],(T)array[i+1]) == -1) {
+							temp = array[i+1];
+							array[i+1] = array[i];
+							array[i] = temp;
+							check = true;
+						}
+					}
+				} while (check == true);
+			}
+				
+			this.clear();
+			for(Object obj : array) {
+				this.add((T)obj);
+			}
+		}
+}
+
+class idComparator implements Comparator<Challanger>{
+	@Override
+	public int compare(Challanger o1, Challanger o2) {
+		if(o1.getRegistrationNum() > o2.getRegistrationNum())
+			return 1;
+		else if (o1.getRegistrationNum() < o2.getRegistrationNum())
+			return -1;
+		else
+			return 0;
+	}
+}
+
+class workExperienceComparator implements Comparator<Challanger>{
+	@Override
+	public int compare(Challanger o1, Challanger o2) {
+		if(o1.getWorkExperience().getExperience() > o2.getWorkExperience().getExperience())
+			return 1;
+		else if (o1.getWorkExperience().getExperience() < o2.getWorkExperience().getExperience())
+			return -1;
+		else
+			return 0;
+	}
+}
+
+class minSalazyComparator implements Comparator<Challanger>{
+	@Override
+	public int compare(Challanger o1, Challanger o2) {
+		if(o1.getDemandsToWork().getMinSalary() > o2.getDemandsToWork().getMinSalary())
+			return 1;
+		else if (o1.getDemandsToWork().getMinSalary() < o2.getDemandsToWork().getMinSalary())
+			return -1;
+		else
+			return 0;
+	}
+	
 }

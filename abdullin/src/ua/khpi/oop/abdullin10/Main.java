@@ -1,4 +1,4 @@
-package ua.khpi.oop.abdullin09;
+package ua.khpi.oop.abdullin10;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -19,10 +19,59 @@ public class Main {
 	public static void main(String[] args) {
 		MyContainer<Challanger> recruitingAgency = new MyContainer<Challanger>();
 		
+		for (String str : args) {
+			if(str.equals("-a") || str.equals("-auto")) {
+				recruitingAgency = auto(recruitingAgency);
+				return;
+			}
+		}
+		recruitingAgency = menu(recruitingAgency);
+	}
+
+	private static MyContainer<Challanger> auto(MyContainer<Challanger> recruitingAgency) {
+		System.out.println("Adding elements...");
+		String filenameDeserialization = "recruitingAgency10.xml";
+		try(XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream (filenameDeserialization)))){
+			recruitingAgency.clear();
+			recruitingAgency = (MyContainer<Challanger>) decoder.readObject();
+		} catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("Adding was end.\n");
+		
+		System.out.println("List in Recruiting Agency:\n");
+		if(recruitingAgency.getSize() > 0) {
+			for(var element : recruitingAgency) {
+				element.print();
+			}
+		}
+		else {
+			System.out.println("The recruiting agency is empty!\n");
+		}
+		
+		int orderSort = 1;
+		
+		recruitingAgency.sort(new workExperienceComparator(), orderSort);
+		System.out.println("Data sorted by work experience");
+		
+		System.out.println("List in Recruiting Agency:\n");
+		if(recruitingAgency.getSize() > 0) {
+			for(var element : recruitingAgency) {
+				element.print();
+			}
+		}
+		
+		return recruitingAgency;
+	}
+	
+	private static MyContainer<Challanger> menu(MyContainer<Challanger> recruitingAgency) {
 		boolean endprog = false;
 		Scanner inInt = new Scanner(System.in);
 		Scanner inStr = new Scanner(System.in);
 		int menu;
+		int menuSort;
+		int orderSort;
 		int menuSerialization;
 		int menuDeserialization;
 		
@@ -33,8 +82,9 @@ public class Main {
 			System.out.println("3. Delete chellanger");
 			System.out.println("4. Clear list");
 			System.out.println("5. Is empty recruiting agency?");
-			System.out.println("6. Serialize data");
-			System.out.println("7. Deserialize data");
+			System.out.println("6. Sort data");
+			System.out.println("7. Serialize data");
+			System.out.println("8. Deserialize data");
 			System.out.println("0. Exit");
 			System.out.print("Enter option: ");
 			try 
@@ -180,6 +230,56 @@ public class Main {
 					System.out.println("Recruiting agency is not empty.");
 				break;
 			case 6:
+				System.out.println("1. Sort by Registration Number");
+				System.out.println("2. Sort by work experience");
+				System.out.println("3. Sort by demand to min salary");
+				System.out.println("4. Return to menu");
+				System.out.println("Enter option: ");
+				try 
+				{
+					menuSort =  inInt.nextInt();
+				}
+				catch(java.util.InputMismatchException e) 
+				{
+					System.out.println("Error! Ошибка ввода.");
+					break;
+				}
+				System.out.println();
+				System.out.println("How to sort data?");
+				System.out.println("1. Asc");
+				System.out.println("2. Desc");
+				System.out.println("Enter option: ");
+				try 
+				{
+					orderSort =  inInt.nextInt();
+				}
+				catch(java.util.InputMismatchException e) 
+				{
+					System.out.println("Error! Ошибка ввода.");
+					break;
+				}
+				switch(menuSort) {
+				case 1:
+					recruitingAgency.sort(new idComparator(), orderSort);
+					System.out.println("Data sorted by Registration Number\n");
+					break;
+				case 2:
+					recruitingAgency.sort(new workExperienceComparator(), orderSort);
+					System.out.println("Data sorted by work experience\n");
+					break;
+				case 3:
+					recruitingAgency.sort(new minSalazyComparator(), orderSort);
+					System.out.println("Data sorted by demand to min salary");
+					break;
+				case 4:
+		
+					break;
+				default:
+					System.out.println("Error! Wrong num in Sort menu.");
+					break;
+				}
+				break;
+			case 7:
 				String filenameSerialization;
 				String filenameXML;
 				
@@ -229,7 +329,7 @@ public class Main {
 					break;
 				}
 				break;
-			case 7:
+			case 8:
 				String filenameDeserialization;
 				
 				System.out.println("1. Deserialization");
@@ -290,5 +390,8 @@ public class Main {
 				break;
 			}
 		}
+		return recruitingAgency;
 	}
 }
+
+	
