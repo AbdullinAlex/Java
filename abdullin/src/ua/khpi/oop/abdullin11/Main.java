@@ -163,6 +163,8 @@ public class Main {
 				String specializationNext;
 				int minSalary;
 				String conditions;
+				boolean check = true;
+				boolean temp;
 				
 				Pattern patternEducation = Pattern.compile("(\\w+.)+");
 				Pattern patternDay = Pattern.compile("([1-9]|[12]\\d|3[01])");
@@ -174,18 +176,15 @@ public class Main {
 				Pattern patternConditions = Pattern.compile("(\\w+(\\.|\\s)(\\s|))+");
 				
 				System.out.println("Enter education of challanger: ");
-				try {
-					education = inStr.nextLine();
-					education = stringRegexCheck(education, patternEducation);
-				}catch(java.util.InputMismatchException e) {
-					System.out.println("Error! Incorect input!");
-					break;
-				}
+				education = inStr.nextLine();
+				temp = RegexCheck.stringRegexCheck(education, patternEducation);
+				check = check & temp;
 				
 				System.out.println("Enter day of dismissal: ");
 				try {
 					day = inInt.nextInt();
-					day = intRegexCheck(day, patternDay);
+					temp = RegexCheck.intRegexCheck(day, patternDay);
+					check = check & temp;
 				} catch(java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
@@ -194,7 +193,8 @@ public class Main {
 				System.out.println("Enter month of dismissal: ");
 				try {
 					month = inInt.nextInt();
-					month = intRegexCheck(month, patternMonth);
+					temp = RegexCheck.intRegexCheck(month, patternMonth);
+					check = check & temp;
 				} catch(java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
@@ -203,62 +203,60 @@ public class Main {
 				System.out.println("Enter year of dismissal: ");
 				try {
 					year = inInt.nextInt();
-					year = intRegexCheck(year, patternYear);
+					temp = RegexCheck.intRegexCheck(year, patternYear);
+					check = check & temp;
 				} catch(java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
 				}
 
 				System.out.println("Enter pervious job: ");
-				try {
-					specializationPrevious = inStr.nextLine();
-					specializationPrevious = stringRegexCheck(specializationPrevious, patternSpeñialization);
-				} catch(java.util.InputMismatchException e) {
-					System.out.println("Error! Incorect input!");
-					break;
-				}
+				specializationPrevious = inStr.nextLine();
+				temp = RegexCheck.stringRegexCheck(specializationPrevious, patternSpeñialization);
+				check = check & temp;
 				
 				System.out.println("Enter experience of working: ");
 				try {
 					experience = inInt.nextInt();
-					experience = intRegexCheck(experience, patternExperience); 
+					temp = RegexCheck.intRegexCheck(experience, patternExperience);
+					check = check & temp;
 				} catch(java.util.InputMismatchException e){
 					System.out.println("Error! Incorect input!");
 					break;
 				}
 				
 				System.out.println("Enter next job: ");
-				try {
-					specializationNext = inStr.nextLine();
-					specializationNext = stringRegexCheck(specializationNext, patternSpeñialization);
-				} catch(java.util.InputMismatchException e) {
-					System.out.println("Error! Incorect input!");
-					break;
-				}
+				specializationNext = inStr.nextLine();
+				temp = RegexCheck.stringRegexCheck(specializationNext, patternSpeñialization);
+				check = check & temp;
 				
 				System.out.println("Enter min salary: ");
 				try {
 					minSalary = inInt.nextInt();
-					minSalary = intRegexCheck(minSalary, patternMinSalary);
+					temp = RegexCheck.intRegexCheck(minSalary, patternMinSalary);
+					check = check & temp;
 				}catch (java.util.InputMismatchException e) {
 					System.out.println("Error! Incorect input!");
 					break;
 				}
 				
 				System.out.println("Enter whishes to the next job: ");
-				try {
-					conditions = inStr.nextLine();
-					conditions = stringRegexCheck(conditions, patternConditions);
-				} catch(java.util.InputMismatchException e){
-					System.out.println("Error! Incorect input!");
-					break;
-				}
-				int id = recruitingAgency.getSize();
+				conditions = inStr.nextLine();
+				temp = RegexCheck.stringRegexCheck(conditions, patternConditions);
+				check = check & temp;
 				
-				WorkExperience workExperienceAdd = new WorkExperience(specializationPrevious, experience);
-				DemandsToWork demandsToWorkAdd = new DemandsToWork(specializationNext,minSalary,conditions);
-				Challanger challangerAdd = new Challanger(id++,education,day,month,year,workExperienceAdd,demandsToWorkAdd);
-				recruitingAgency.add(challangerAdd);
+				if(check) {
+					int id = recruitingAgency.getSize();
+				
+					WorkExperience workExperienceAdd = new WorkExperience(specializationPrevious, experience);
+					DemandsToWork demandsToWorkAdd = new DemandsToWork(specializationNext,minSalary,conditions);
+					Challanger challangerAdd = new Challanger(id++,education,day,month,year,workExperienceAdd,demandsToWorkAdd);
+					recruitingAgency.add(challangerAdd);
+				}
+				else
+				{
+					System.out.println("Error! Incorect data was putted.");
+				}
 				break;
 			case 3:
 				System.out.println("Enter ID to delete: ");
@@ -453,45 +451,7 @@ public class Main {
 		}
 		return recruitingAgency;
 	}
-	public static int intRegexCheck(int value, Pattern pattern)
-	{
-		Matcher matcher;
-		Scanner in = new Scanner(System.in);
-		boolean ready = false;
-		do
-		{
-			matcher = pattern.matcher(Integer.toString(value));
-			if(!matcher.matches())
-			{
-				System.out.println("You've entered the wrong data. Try again:");
-				value = in.nextInt();
-			}
-			else
-				ready = true;
-		}
-		while(!ready);
-		return value;
-	}
-	
-	public static String stringRegexCheck(String value, Pattern pattern)
-	{
-		Matcher matcher;
-		Scanner in = new Scanner(System.in);
-		boolean ready = false;
-		do
-		{
-			matcher = pattern.matcher(value);
-			if(!matcher.matches())
-			{
-				System.out.println("You've entered the wrong data. Try again:");
-				value = in.nextLine();
-			}
-			else
-				ready = true;
-		}
-		while(!ready);
-		return value;
-	}
+
 }
 
 	

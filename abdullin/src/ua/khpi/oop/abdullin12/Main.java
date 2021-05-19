@@ -93,7 +93,18 @@ public class Main {
 			System.out.println("The recruiting agency is empty!\n");
 		}
 		
-		task(recruitingAgency);
+		MyContainer<Challanger> recruters = task(recruitingAgency);
+		
+		if(recruters.getSize() > 0) {
+			System.out.println("\nChallangers with wishes to dose not have a buiness trip:\n");
+			for(var challanger : recruters) {
+				challanger.print();
+			}
+			System.out.println();
+		}
+		else {
+			System.out.println("\nChallangers without wishes to dose not have a buisness trip.\n");
+		}
 		
 		int orderSort = 1;
 		
@@ -445,7 +456,18 @@ public class Main {
 				}
 				break;
 			case 9:
-				task(recruitingAgency);
+				MyContainer<Challanger> recruters = task(recruitingAgency);
+				
+				if(recruters.getSize() > 0) {
+					System.out.println("\nChallangers with wishes to dose not have a buiness trip:\n");
+					for(var challanger : recruters) {
+						challanger.print();
+					}
+					System.out.println();
+				}
+				else {
+					System.out.println("\nChallangers without wishes to dose not have a buisness trip.\n");
+				}
 				break;
 			case 0:
 				endprog = true;
@@ -499,7 +521,7 @@ public class Main {
 		return value;
 	}
 	
-	public static void task(MyContainer<Challanger> recruitingAgency) {
+	public static MyContainer<Challanger> task(MyContainer<Challanger> recruitingAgency) {
 		String conditions;
 		String prevJob;
 		Pattern patternManager = Pattern.compile(".*(M|m)anager.*"); 
@@ -523,16 +545,7 @@ public class Main {
 				}
 			}	
 		}
-		if(task.getSize() > 0) {
-			System.out.println("\nChallangers with wishes to dose not have a buiness trip:\n");
-			for(var challanger : task) {
-				challanger.print();
-			}
-			System.out.println();
-		}
-		else {
-			System.out.println("\nChallangers without wishes to dose not have a buisness trip.\n");
-		}
+		return task;
 	}
 }
 

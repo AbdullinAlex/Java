@@ -8,7 +8,7 @@ public class MyThread implements Runnable {
 	private boolean isActive;
 	Thread thread;
 	
-	MyThread(MyContainer<Challanger> container2, String name){
+	public MyThread(MyContainer<Challanger> container2, String name){
 		container = container2;
 		isActive = true;
 		thread = new Thread(this, name);
@@ -20,9 +20,15 @@ public class MyThread implements Runnable {
 	
 	@Override
 	public void run() {
+		int count = count();
+
+		System.out.println(Thread.currentThread().getName() + ": " + count);
+		System.out.println(Thread.currentThread().getName() + " finished");
+	}
+	
+	public int count() {
 		int count = 0;
 		int minSalary = 0;
-		
 		for(Challanger i : container) {
 			if(isActive) {
 				minSalary = i.getDemandsToWork().getMinSalary();
@@ -34,7 +40,6 @@ public class MyThread implements Runnable {
 				break;
 			}
 		}
-		System.out.println(Thread.currentThread().getName() + ": " + count);
-		System.out.println(Thread.currentThread().getName() + " finished");
+		return count;
 	}
 }

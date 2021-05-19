@@ -13,8 +13,8 @@ public class MyContainer<T> implements Iterable<T>, Serializable {
 		
 		public MyContainer() {
 			super();
+			this.setSize(0);
 		}
-		
 		
 		public int getSize() {
 			return size;
